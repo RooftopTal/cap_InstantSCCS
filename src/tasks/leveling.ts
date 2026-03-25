@@ -352,7 +352,7 @@ function sellMiscellaneousItems(): void {
     $item`vinegar-soaked lemon slice`,
     $item`exotic jungle fruit`,
     $item`fat stacks of cash`,
-    $item`stolen sushi`
+    $item`stolen sushi`,
   ];
   items.forEach((it) => {
     if (itemAmount(it) > 1) autosell(it, itemAmount(it) - 1);
@@ -2283,12 +2283,13 @@ export const LevelingQuest: Quest = {
         modes: { umbrella: "broken" },
       }),
       completed: () =>
-        false && // todo wait here while testing to ensure this works
         have($item`punk rock jacket`) ||
         CombatLoversLocket.monstersReminisced().includes($monster`Punk Rock Giant`) ||
         !CombatLoversLocket.availableLocketMonsters().includes($monster`Punk Rock Giant`) ||
-        (get("_gingerbreadMobHitUsed") || !have($skill`Gingerbread Mob Hit`)) ||
-        (get("_feelEnvyUsed") === 3 || !have($skill`Feel Envy`)),
+        get("_gingerbreadMobHitUsed") ||
+        !have($skill`Gingerbread Mob Hit`) ||
+        get("_feelEnvyUsed") === 3 ||
+        !have($skill`Feel Envy`),
       do: () => CombatLoversLocket.reminisce($monster`Punk Rock Giant`),
       combat: new CombatStrategy().macro(
         Macro.trySkill($skill`Feel Envy`)
