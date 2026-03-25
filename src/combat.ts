@@ -61,9 +61,8 @@ export function haveFreeKill(): boolean {
   // TODO: Support for Parka YR
   const haveXRay = have($item`Lil' Doctor™ bag`) && get("_chestXRayUsed") < 3;
   const haveShatteringPunch = have($skill`Shattering Punch`) && get("_shatteringPunchUsed") < 3;
-  const haveMobHit = have($skill`Gingerbread Mob Hit`) && !get("_gingerbreadMobHitUsed");
 
-  return haveXRay || haveShatteringPunch || haveMobHit;
+  return haveXRay || haveShatteringPunch;
 }
 
 export function haveMotherSlimeBanish(): boolean {

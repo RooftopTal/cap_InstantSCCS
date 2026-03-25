@@ -352,6 +352,7 @@ function sellMiscellaneousItems(): void {
     $item`vinegar-soaked lemon slice`,
     $item`exotic jungle fruit`,
     $item`fat stacks of cash`,
+    $item`stolen sushi`
   ];
   items.forEach((it) => {
     if (itemAmount(it) > 1) autosell(it, itemAmount(it) - 1);
@@ -1084,7 +1085,6 @@ export const LevelingQuest: Quest = {
           Macro.tryItem($item`blue rocket`)
             .tryItem($item`red rocket`)
             .trySkill($skill`Chest X-Ray`)
-            .trySkill($skill`Gingerbread Mob Hit`)
             .trySkill($skill`Shattering Punch`)
             .default(),
         )
@@ -1130,7 +1130,6 @@ export const LevelingQuest: Quest = {
           Macro.tryItem($item`blue rocket`)
             .tryItem($item`red rocket`)
             .trySkill($skill`Chest X-Ray`)
-            .trySkill($skill`Gingerbread Mob Hit`)
             .trySkill($skill`Shattering Punch`)
             .default(),
         ).abort(),
@@ -2271,6 +2270,38 @@ export const LevelingQuest: Quest = {
       limit: { tries: 1 },
     },
     {
+      name: "Punk Rock Giant (Locket)",
+      prepare: (): void => {
+        restoreHp(clamp(1000, myMaxhp() / 2, myMaxhp()));
+        tryAcquiringEffects(usefulEffects);
+        attemptRestoringMpWithFreeRests(50);
+      },
+      outfit: () => ({
+        ...baseOutfit(),
+        shirt: garbageShirt(),
+        offhand: $item`unbreakable umbrella`,
+        modes: { umbrella: "broken" },
+      }),
+      completed: () =>
+        false && // todo wait here while testing to ensure this works
+        have($item`punk rock jacket`) ||
+        CombatLoversLocket.monstersReminisced().includes($monster`Punk Rock Giant`) ||
+        !CombatLoversLocket.availableLocketMonsters().includes($monster`Punk Rock Giant`) ||
+        (get("_gingerbreadMobHitUsed") || !have($skill`Gingerbread Mob Hit`)) ||
+        (get("_feelEnvyUsed") === 3 || !have($skill`Feel Envy`)),
+      do: () => CombatLoversLocket.reminisce($monster`Punk Rock Giant`),
+      combat: new CombatStrategy().macro(
+        Macro.trySkill($skill`Feel Envy`)
+          .trySkill($skill`Gingerbread Mob Hit`)
+          .default(),
+      ),
+      post: (): void => {
+        sendAutumnaton();
+        sellMiscellaneousItems();
+      },
+      limit: { tries: 1 },
+    },
+    {
       name: "Witchess King (Locket)",
       prepare: (): void => {
         restoreHp(clamp(1000, myMaxhp() / 2, myMaxhp()));
@@ -2327,7 +2358,6 @@ export const LevelingQuest: Quest = {
           !have($item`legendary seal-clubbing club`) ||
           !havePowerlevelingZoneBound()) &&
         (get("_shatteringPunchUsed") >= 3 || !have($skill`Shattering Punch`)) &&
-        (get("_gingerbreadMobHitUsed") || !have($skill`Gingerbread Mob Hit`)) &&
         (haveCBBIngredients(true) || overleveled()),
       do: powerlevelingLocation(),
       combat: new CombatStrategy().macro(
@@ -2341,7 +2371,6 @@ export const LevelingQuest: Quest = {
 
           .trySkill($skill`Club 'Em Back in Time`)
           .trySkill($skill`Shattering Punch`)
-          .trySkill($skill`Gingerbread Mob Hit`)
           .trySkill($skill`Bowl Sideways`)
           .default(useCinch),
       ),
