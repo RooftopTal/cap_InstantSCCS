@@ -7,8 +7,16 @@
 To install the script, use the following command in the KoLMafia CLI.<br/>
 
 ```text
-git checkout https://github.com/Pantocyclus/instantsccs.git release
+git checkout https://github.com/RooftopTal/cap_InstantSCCS.git release
 ```
+
+## Deviations
+
+- We grab a Punk Rock Jacket for the 145 shirt power during busks, which requires:
+  - Using a locket reminisce to fight a Punk Rock Giant while levelling
+  - Saving a Feel Envy/Gingerbread Mob Hit charge to make the fight free
+  - (this should be the last locket fight, since `humanoid` gives +25% spell damage)
+- Deep dark visions is printing logs so I can figure out how to make it happen more often
 
 ## Usage
 

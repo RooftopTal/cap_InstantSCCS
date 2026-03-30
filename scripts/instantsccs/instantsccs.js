@@ -15984,22 +15984,21 @@ var LevelingQuest = {
       tries: 1
     }
   }, {
-    name: "Punk Rock Giant (Locket)",
+    name: "Witchess King (Locket)",
     prepare: () => {
       kolmafia.restoreHp(clamp(1000, kolmafia.myMaxhp() / 2, kolmafia.myMaxhp()));
-      tryAcquiringEffects(usefulEffects);
       attemptRestoringMpWithFreeRests(50);
     },
+    completed: () => monstersReminisced().includes($monster(_templateObject588 || (_templateObject588 = _taggedTemplateLiteral(["Witchess King"])))) || !availableLocketMonsters().includes($monster(_templateObject589 || (_templateObject589 = _taggedTemplateLiteral(["Witchess King"])))) || get("instant_saveLocketWitchessKing", false) || have$a($item(_templateObject590 || (_templateObject590 = _taggedTemplateLiteral(["dented scepter"])))),
+    "do": () => reminisce($monster(_templateObject591 || (_templateObject591 = _taggedTemplateLiteral(["Witchess King"])))),
+    combat: new CombatStrategy().macro(() => Macro.while_("!mpbelow ".concat(kolmafia.mpCost($skill(_templateObject592 || (_templateObject592 = _taggedTemplateLiteral(["Toynado"])))), " && hasskill ").concat(kolmafia.toInt($skill(_templateObject593 || (_templateObject593 = _taggedTemplateLiteral(["Toynado"]))))), Macro.skill($skill(_templateObject594 || (_templateObject594 = _taggedTemplateLiteral(["Toynado"])))))["default"](useCinch)),
     outfit: () => _objectSpread2(_objectSpread2({}, baseOutfit()), {}, {
       shirt: garbageShirt(),
-      offhand: $item(_templateObject588 || (_templateObject588 = _taggedTemplateLiteral(["unbreakable umbrella"]))),
+      offhand: $item(_templateObject595 || (_templateObject595 = _taggedTemplateLiteral(["unbreakable umbrella"]))),
       modes: {
         umbrella: "broken"
       }
     }),
-    completed: () => have$a($item(_templateObject589 || (_templateObject589 = _taggedTemplateLiteral(["punk rock jacket"])))) || monstersReminisced().includes($monster(_templateObject590 || (_templateObject590 = _taggedTemplateLiteral(["Punk Rock Giant"])))) || !availableLocketMonsters().includes($monster(_templateObject591 || (_templateObject591 = _taggedTemplateLiteral(["Punk Rock Giant"])))) || get("_gingerbreadMobHitUsed") || !have$a($skill(_templateObject592 || (_templateObject592 = _taggedTemplateLiteral(["Gingerbread Mob Hit"])))) || get("_feelEnvyUsed") === 3 || !have$a($skill(_templateObject593 || (_templateObject593 = _taggedTemplateLiteral(["Feel Envy"])))),
-    "do": () => reminisce($monster(_templateObject594 || (_templateObject594 = _taggedTemplateLiteral(["Punk Rock Giant"])))),
-    combat: new CombatStrategy().macro(Macro.trySkill($skill(_templateObject595 || (_templateObject595 = _taggedTemplateLiteral(["Feel Envy"])))).trySkill($skill(_templateObject596 || (_templateObject596 = _taggedTemplateLiteral(["Gingerbread Mob Hit"]))))["default"]()),
     post: () => {
       sendAutumnaton();
       sellMiscellaneousItems();
@@ -16008,21 +16007,23 @@ var LevelingQuest = {
       tries: 1
     }
   }, {
-    name: "Witchess King (Locket)",
+    name: "Punk Rock Giant (Locket)",
+    // PRG should be locketed last to tune buffs to humanoid (spell damage)
     prepare: () => {
       kolmafia.restoreHp(clamp(1000, kolmafia.myMaxhp() / 2, kolmafia.myMaxhp()));
+      tryAcquiringEffects(usefulEffects);
       attemptRestoringMpWithFreeRests(50);
     },
-    completed: () => monstersReminisced().includes($monster(_templateObject597 || (_templateObject597 = _taggedTemplateLiteral(["Witchess King"])))) || !availableLocketMonsters().includes($monster(_templateObject598 || (_templateObject598 = _taggedTemplateLiteral(["Witchess King"])))) || get("instant_saveLocketWitchessKing", false) || have$a($item(_templateObject599 || (_templateObject599 = _taggedTemplateLiteral(["dented scepter"])))),
-    "do": () => reminisce($monster(_templateObject600 || (_templateObject600 = _taggedTemplateLiteral(["Witchess King"])))),
-    combat: new CombatStrategy().macro(() => Macro.while_("!mpbelow ".concat(kolmafia.mpCost($skill(_templateObject601 || (_templateObject601 = _taggedTemplateLiteral(["Toynado"])))), " && hasskill ").concat(kolmafia.toInt($skill(_templateObject602 || (_templateObject602 = _taggedTemplateLiteral(["Toynado"]))))), Macro.skill($skill(_templateObject603 || (_templateObject603 = _taggedTemplateLiteral(["Toynado"])))))["default"](useCinch)),
     outfit: () => _objectSpread2(_objectSpread2({}, baseOutfit()), {}, {
       shirt: garbageShirt(),
-      offhand: $item(_templateObject604 || (_templateObject604 = _taggedTemplateLiteral(["unbreakable umbrella"]))),
+      offhand: $item(_templateObject596 || (_templateObject596 = _taggedTemplateLiteral(["unbreakable umbrella"]))),
       modes: {
         umbrella: "broken"
       }
     }),
+    completed: () => have$a($item(_templateObject597 || (_templateObject597 = _taggedTemplateLiteral(["punk rock jacket"])))) || monstersReminisced().includes($monster(_templateObject598 || (_templateObject598 = _taggedTemplateLiteral(["Punk Rock Giant"])))) || !availableLocketMonsters().includes($monster(_templateObject599 || (_templateObject599 = _taggedTemplateLiteral(["Punk Rock Giant"])))) || get("_gingerbreadMobHitUsed") || !have$a($skill(_templateObject600 || (_templateObject600 = _taggedTemplateLiteral(["Gingerbread Mob Hit"])))) || get("_feelEnvyUsed") === 3 || !have$a($skill(_templateObject601 || (_templateObject601 = _taggedTemplateLiteral(["Feel Envy"])))),
+    "do": () => reminisce($monster(_templateObject602 || (_templateObject602 = _taggedTemplateLiteral(["Punk Rock Giant"])))),
+    combat: new CombatStrategy().macro(Macro.trySkill($skill(_templateObject603 || (_templateObject603 = _taggedTemplateLiteral(["Feel Envy"])))).trySkill($skill(_templateObject604 || (_templateObject604 = _taggedTemplateLiteral(["Gingerbread Mob Hit"]))))["default"]()),
     post: () => {
       sendAutumnaton();
       sellMiscellaneousItems();
@@ -17227,8 +17228,14 @@ var SpellDamageQuest = {
       triedDeepDark = true;
       var resist = 1 - kolmafia.elementalResistance($element(_templateObject54$2 || (_templateObject54$2 = _taggedTemplateLiteral(["spooky"])))) / 100;
       var neededHp = Math.max(500, kolmafia.myMaxhp() * 4 * resist);
-      if (kolmafia.myMaxhp() < neededHp) return;
-      if (kolmafia.myHp() < neededHp) kolmafia.restoreHp(neededHp);
+      if (kolmafia.myMaxhp() < neededHp) {
+        kolmafia.print("Need ".concat(neededHp, ", but HP cap is currently ").concat(kolmafia.myMaxhp()));
+        return;
+      }
+      if (kolmafia.myHp() < neededHp) {
+        kolmafia.print("Need ".concat(neededHp, ", currently ").concat(kolmafia.myMaxhp(), " - restoring HP..."));
+        kolmafia.restoreHp(neededHp);
+      }
       tryAcquiringEffect($effect(_templateObject55$2 || (_templateObject55$2 = _taggedTemplateLiteral(["Visions of the Deep Dark Deeps"]))));
     },
     outfit: {
