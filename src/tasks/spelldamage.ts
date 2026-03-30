@@ -238,7 +238,7 @@ export const SpellDamageQuest: Quest = {
         const neededHp = Math.max(500, myMaxhp() * 4 * resist);
         if (myMaxhp() < neededHp) return;
         if (myHp() < neededHp) restoreHp(neededHp);
-        tryAcquiringEffect($effect`Visions of the Deep Dark Deeps`);
+        tryAcquiringEffect($effect`Visions of the Deep Dark Deeps`, true);
       },
       outfit: { modifier: "HP 500max, Spooky Resistance", familiar: $familiar`Exotic Parrot` },
       limit: { tries: 1 },

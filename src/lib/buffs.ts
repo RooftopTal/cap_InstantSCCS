@@ -48,6 +48,7 @@ import {
 } from "libram";
 import { excludedEffects } from "../resources";
 import { acquiredOrExcluded, mainStat, mainStatStr } from "./accountstate";
+import { attemptRestoringMpWithFreeRests } from "./actions";
 
 export const reagentBalancerEffect: Effect = {
   Muscle: $effect`Stabilizing Oiliness`,
@@ -265,6 +266,10 @@ export function tryAcquiringEffect(ef: Effect, tryRegardless = false): void {
   if (tryRegardless || canAcquireEffect(ef)) {
     const efDefault = ef.default;
     if (efDefault.split(" ")[0] === "cargo") return; // Don't acquire effects with cargo (items are usually way more useful)
+    if (efDefault.split(" ")[0] === "cast") {
+      // Try & restore MP if casting/tryRegardless is true
+      attemptRestoringMpWithFreeRests(mpCost(toSkill(ef)));
+    }
 
     const usePowerfulGlove =
       efDefault.includes("CHEAT CODE") &&
