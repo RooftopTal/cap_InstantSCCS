@@ -11986,8 +11986,7 @@ function tryAcquiringEffect(ef) {
     if (efDefault.split(" ")[0] === "cargo") return; // Don't acquire effects with cargo (items are usually way more useful)
     if (efDefault.split(" ")[0] === "cast") {
       // Try & restore MP if casting/tryRegardless is true
-      var castMp = kolmafia.mpCost(kolmafia.toSkill(ef));
-      if (kolmafia.myMp() < castMp) attemptRestoringMpWithFreeRests(castMp);
+      attemptRestoringMpWithFreeRests(kolmafia.mpCost(kolmafia.toSkill(ef)));
     }
     var usePowerfulGlove = efDefault.includes("CHEAT CODE") && have$a($item(_templateObject43$a || (_templateObject43$a = _taggedTemplateLiteral(["Powerful Glove"])))) && !kolmafia.haveEquipped($item(_templateObject44$a || (_templateObject44$a = _taggedTemplateLiteral(["Powerful Glove"]))));
     var currentAcc = kolmafia.equippedItem($slot(_templateObject45$a || (_templateObject45$a = _taggedTemplateLiteral(["acc3"]))));
