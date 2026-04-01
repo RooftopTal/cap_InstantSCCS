@@ -11984,7 +11984,10 @@ function tryAcquiringEffect(ef) {
   if (tryRegardless || canAcquireEffect(ef)) {
     var efDefault = ef["default"];
     if (efDefault.split(" ")[0] === "cargo") return; // Don't acquire effects with cargo (items are usually way more useful)
-
+    if (efDefault.split(" ")[0] === "cast") {
+      // Try & restore MP if casting/tryRegardless is true
+      attemptRestoringMpWithFreeRests(kolmafia.mpCost(kolmafia.toSkill(ef)));
+    }
     var usePowerfulGlove = efDefault.includes("CHEAT CODE") && have$a($item(_templateObject43$a || (_templateObject43$a = _taggedTemplateLiteral(["Powerful Glove"])))) && !kolmafia.haveEquipped($item(_templateObject44$a || (_templateObject44$a = _taggedTemplateLiteral(["Powerful Glove"]))));
     var currentAcc = kolmafia.equippedItem($slot(_templateObject45$a || (_templateObject45$a = _taggedTemplateLiteral(["acc3"]))));
     if (usePowerfulGlove) kolmafia.equip($slot(_templateObject46$a || (_templateObject46$a = _taggedTemplateLiteral(["acc3"]))), $item(_templateObject47$a || (_templateObject47$a = _taggedTemplateLiteral(["Powerful Glove"]))));
@@ -17228,15 +17231,9 @@ var SpellDamageQuest = {
       triedDeepDark = true;
       var resist = 1 - kolmafia.elementalResistance($element(_templateObject54$2 || (_templateObject54$2 = _taggedTemplateLiteral(["spooky"])))) / 100;
       var neededHp = Math.max(500, kolmafia.myMaxhp() * 4 * resist);
-      if (kolmafia.myMaxhp() < neededHp) {
-        kolmafia.print("Need ".concat(neededHp, ", but HP cap is currently ").concat(kolmafia.myMaxhp()));
-        return;
-      }
-      if (kolmafia.myHp() < neededHp) {
-        kolmafia.print("Need ".concat(neededHp, ", currently ").concat(kolmafia.myMaxhp(), " - restoring HP..."));
-        kolmafia.restoreHp(neededHp);
-      }
-      tryAcquiringEffect($effect(_templateObject55$2 || (_templateObject55$2 = _taggedTemplateLiteral(["Visions of the Deep Dark Deeps"]))));
+      if (kolmafia.myMaxhp() < neededHp) return;
+      if (kolmafia.myHp() < neededHp) kolmafia.restoreHp(neededHp);
+      tryAcquiringEffect($effect(_templateObject55$2 || (_templateObject55$2 = _taggedTemplateLiteral(["Visions of the Deep Dark Deeps"]))), true);
     },
     outfit: {
       modifier: "HP 500max, Spooky Resistance",
