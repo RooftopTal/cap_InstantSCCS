@@ -17,7 +17,7 @@ git checkout https://github.com/RooftopTal/cap_InstantSCCS.git release
   - Saving a Feel Envy/Gingerbread Mob Hit charge to make the fight free
   - (this should be the last locket fight, since `humanoid` gives +25% spell damage)
 - Deep dark visions now restores MP prior to test
-  - This actually restores MP by trying free rests *whenever* `tryRegardless` is true, so need to be a bit mindful of that
+  - This actually restores MP by trying free rests _whenever_ `tryRegardless` is true, so need to be a bit mindful of that
 
 ## Usage
 
