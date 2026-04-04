@@ -16,7 +16,8 @@ git checkout https://github.com/RooftopTal/cap_InstantSCCS.git release
   - Using a locket reminisce to fight a Punk Rock Giant while levelling
   - Saving a Feel Envy/Gingerbread Mob Hit charge to make the fight free
   - (this should be the last locket fight, since `humanoid` gives +25% spell damage)
-- Deep dark visions is printing logs so I can figure out how to make it happen more often
+- Deep dark visions now restores MP prior to test
+  - This actually restores MP by trying free rests _whenever_ `tryRegardless` is true, so need to be a bit mindful of that
 
 ## Usage
 
@@ -205,6 +206,10 @@ Note that the script<br/>
 - throws an error if it fails to acquire the specified busk at the specified cast<br/>
 
 <sub><sup>Do consider using [this](https://beret.loathers.net/) to help you plan out the busks you need.</sup></sub><br/>
+
+### Can I get the script to execute custom Genie/Paw wishes?
+
+As with the custom pulls and busks, `instant_<testName>TestWishes=<comma-separated effct IDs>` (e.g. `instant_spellTestWishes=1523,1833`), as well as `instant_preWishes` and `instant_freeFightWishes` are supported by the script.
 
 ### Some users have experienced having all their preferences wiped when KoLMafia inadvertently crashes. What is the best way to back up my long list of customized InstantSCCS preferences?
 
