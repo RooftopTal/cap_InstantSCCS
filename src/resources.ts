@@ -140,6 +140,7 @@ export const encounterResources: Resource[] = [
     [],
     get("instant_saveCyberRealmFights", false) ? 10 : 0,
   ),
+  new Resource("instant_skipEldritchTentacle", "Do not Evoke Eldritch Horror for a free fight"),
 ];
 
 export const farmingResources: Resource[] = [

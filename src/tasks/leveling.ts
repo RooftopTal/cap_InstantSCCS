@@ -1731,7 +1731,10 @@ export const LevelingQuest: Quest = {
         tryAcquiringEffects(usefulEffects);
         attemptRestoringMpWithFreeRests(50);
       },
-      completed: () => get("_eldritchHorrorEvoked") || !have($skill`Evoke Eldritch Horror`),
+      completed: () =>
+        get("_eldritchHorrorEvoked") ||
+        !have($skill`Evoke Eldritch Horror`) ||
+        get("instant_skipEldritchTentacle", false),
       do: () => useSkill($skill`Evoke Eldritch Horror`),
       post: (): void => {
         if (have($effect`Beaten Up`)) cliExecute("hottub");

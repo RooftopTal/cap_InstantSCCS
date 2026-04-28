@@ -18,6 +18,7 @@ git checkout https://github.com/RooftopTal/cap_InstantSCCS.git release
   - (this should be the last locket fight, since `humanoid` gives +25% spell damage)
 - Deep dark visions now restores MP prior to test
   - This actually restores MP by trying free rests _whenever_ `tryRegardless` is true, so need to be a bit mindful of that
+- Eldritch tentacle has a skip option for ichor farming
 
 ## Usage
 
