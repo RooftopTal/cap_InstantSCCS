@@ -1247,7 +1247,8 @@ export const RunStartQuest: Quest = {
         get("_eldritchHorrorEvoked") ||
         !have($skill`Evoke Eldritch Horror`) ||
         !have($item`Roman Candelabra`) ||
-        have($effect`Everything Looks Purple`),
+        have($effect`Everything Looks Purple`) ||
+        get("instant_skipEldritchTentacle", false),
       do: (): void => {
         useSkill($skill`Evoke Eldritch Horror`);
         visitUrl("main.php");
