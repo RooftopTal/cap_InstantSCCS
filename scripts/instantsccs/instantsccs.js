@@ -17121,7 +17121,7 @@ var RunStartQuest = {
       kolmafia.restoreHp(clamp(1000, kolmafia.myMaxhp() / 2, kolmafia.myMaxhp()));
       attemptRestoringMpWithFreeRests(50);
     },
-    completed: () => get("_eldritchHorrorEvoked") || !have$a($skill(_templateObject314 || (_templateObject314 = _taggedTemplateLiteral(["Evoke Eldritch Horror"])))) || !have$a($item(_templateObject315 || (_templateObject315 = _taggedTemplateLiteral(["Roman Candelabra"])))) || have$a($effect(_templateObject316 || (_templateObject316 = _taggedTemplateLiteral(["Everything Looks Purple"])))),
+    completed: () => get("_eldritchHorrorEvoked") || !have$a($skill(_templateObject314 || (_templateObject314 = _taggedTemplateLiteral(["Evoke Eldritch Horror"])))) || !have$a($item(_templateObject315 || (_templateObject315 = _taggedTemplateLiteral(["Roman Candelabra"])))) || have$a($effect(_templateObject316 || (_templateObject316 = _taggedTemplateLiteral(["Everything Looks Purple"])))) || get("instant_skipEldritchTentacle", false),
     "do": () => {
       kolmafia.useSkill($skill(_templateObject317 || (_templateObject317 = _taggedTemplateLiteral(["Evoke Eldritch Horror"]))));
       kolmafia.visitUrl("main.php");
