@@ -198,8 +198,8 @@ export const MysticalityQuest: Quest = {
           create($item`cold-filtered water`, 1);
         else takeStorage($item`cold-filtered water`, 1);
       },
-      completed: () => 
-        get("_instant_coldFilteredWaterUsed", false) || 
+      completed: () =>
+        get("_instant_coldFilteredWaterUsed", false) ||
         get("tomeSummons") >= 3 ||
         get("instant_saveClipArt", false) ||
         get("instant_skipColdFilteredWater", false),
