@@ -160,6 +160,7 @@ export const farmingResources: Resource[] = [
     $effects`Wasabi With You, Pisces in the Skyces`,
   ),
   new Resource("instant_saveClipArt", "Only summon borrowed time"),
+  new Resource("instant_skipColdFilteredWater", "Skip cold-filtered water specifically"),
   new Resource("instant_saveDeck", "Do not use any deck summons"),
   new Resource("instant_saveBarrelShrine", "Do not get the barrel shrine buff", [
     $effect`Barrel Chested`,
