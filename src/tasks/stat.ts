@@ -1,4 +1,15 @@
-import { buy, create, Effect, itemAmount, Stat, use, useSkill } from "kolmafia";
+import {
+  buy,
+  create,
+  Effect,
+  itemAmount,
+  print,
+  Stat,
+  storageAmount,
+  takeStorage,
+  use,
+  useSkill,
+} from "kolmafia";
 import {
   $coinmaster,
   $effect,
@@ -12,6 +23,7 @@ import {
   get,
   have,
   MayamCalendar,
+  set,
   uneffect,
   withChoice,
 } from "libram";
@@ -176,6 +188,26 @@ export const MysticalityQuest: Quest = {
         CommunityService.Mysticality.isDone() ||
         !have($item`The Eternity Codpiece`),
       do: () => prepareCodpieceForPercentTest("Mysticality", percentModWeighting),
+      limit: { tries: 1 },
+    },
+    {
+      name: "Drink cold filtered water",
+      prepare: (): void => {
+        if (have($item`cold-filtered water`)) return;
+        if (have($skill`Summon Clip Art`) && get("tomeSummons") < 3)
+          create($item`cold-filtered water`, 1);
+        else takeStorage($item`cold-filtered water`, 1);
+      },
+      completed: () => get("_instant_coldFilteredWaterUsed", false) || get("tomeSummons") >= 3,
+      do: (): void => {
+        if (storageAmount($item`cold-filtered water`) === 0 && !have($item`cold-filtered water`)) {
+          print("Uh oh! You do not seem to have a cold-filtered water.", "red");
+          print("This might break the stat tests if you're not buffed enough.", "red");
+        } else {
+          use($item`cold-filtered water`, 1);
+          set("_instant_coldFilteredWaterUsed", true);
+        }
+      },
       limit: { tries: 1 },
     },
     {
