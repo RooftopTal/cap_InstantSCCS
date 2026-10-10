@@ -316,13 +316,20 @@ export const RunStartQuest: Quest = {
       completed: () =>
         !have($item`bat wings`) ||
         get("_batWingsRestUsed") >= 11 ||
-        myMp() >= Math.min(200, myMaxmp()),
+        myMp() >=
+          Math.min(200, myMaxmp() - numericModifier(equippedItem($slot`back`), "Maximum Mp")),
       do: (): void => {
-        equip($slot`back`, $item`bat wings`);
-        if (myMp() < Math.min(200, myMaxmp())) {
+        if (
+          myMp() <
+          Math.min(200, myMaxmp() - numericModifier(equippedItem($slot`back`), "Maximum Mp"))
+        ) {
+          print(
+            `Current MP: ${myMp()}/${myMaxmp()} (${myMaxmp() - numericModifier(equippedItem($slot`back`), "Maximum Mp")})`,
+          );
           useSkill($skill`Rest upside down`);
         }
       },
+      outfit: () => ({ back: $item`bat wings` }),
       limit: { tries: 11 },
     },
     {
@@ -461,6 +468,7 @@ export const RunStartQuest: Quest = {
       name: "Mummery",
       completed: () =>
         get("_mummeryMods").includes(`Experience (${mainStat})`) ||
+        get("_mummeryMods").includes(`${mainStat} Experience`) ||
         !have($item`mumming trunk`) ||
         get("instant_saveMummingTrunk", false),
       do: (): void => {
