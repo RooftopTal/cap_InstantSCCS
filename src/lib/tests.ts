@@ -55,6 +55,10 @@ function logRelevantStats(whichTest: CommunityService): void {
     print(
       `Base ${statString}: ${myBasestat(testStat)}; Buffed ${statString}: ${myBuffedstat(testStat)}`,
     );
+    // Saved so cap can report it at the end of the day (e.g. _cap_instantMysticalityTestBase).
+    // Prefixed _cap_ so it can't clash with upstream InstantSCCS prefs.
+    set(`_cap_instant${testStat}TestBase`, myBasestat(testStat));
+    set(`_cap_instant${testStat}TestBuffed`, myBuffedstat(testStat));
   } else if (whichTest === CommunityService.HP) {
     print(`Buffed Mus: ${myBuffedstat($stat`Muscle`)}; HP: ${myMaxhp()};`);
   }
