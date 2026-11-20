@@ -182,15 +182,14 @@ export class Engine extends BaseEngine {
       "_instant_currentTaskAttempts",
       `${task.name}:${task.name in this.attempts ? this.attempts[task.name] : 0}`,
     );
+
+    // Conduct checkLimits() ourselves (outside of execute()) so we can properly handle things like june cleaver encounters
+    const originalTries = task.limit?.tries;
+    if (task.limit?.tries) task.limit.tries = undefined;
     super.execute(task);
+    if (task.limit && originalTries) task.limit.tries = originalTries;
     if (have($effect`Beaten Up`)) {
-      if (
-        [
-          // "Poetic Justice", // grimoire automatically re-runs certain tasks here (https://github.com/loathers/grimoire/blob/main/src/engine.ts#L525)
-          // "Lost and Found", // this includes all cleaver non-combats, so the script would never see these in lastEncounter
-          "Sssshhsssblllrrggghsssssggggrrgglsssshhssslblgl",
-        ].includes(get("lastEncounter"))
-      )
+      if (["Sssshhsssblllrrggghsssssggggrrgglsssshhssslblgl"].includes(get("lastEncounter")))
         uneffect($effect`Beaten Up`);
       else if (
         get("_juneCleaverEncounters") > lastJuneCleaverEncounters && // We hit a June Cleaver NC between the last run and this
@@ -202,6 +201,13 @@ export class Engine extends BaseEngine {
       } else throw new Error("Fight was lost; stop.");
     }
 
+    if (
+      task.name in this.attempts &&
+      (get("_juneCleaverEncounters") > lastJuneCleaverEncounters ||
+        ["Sssshhsssblllrrggghsssssggggrrgglsssshhssslblgl"].includes(get("lastEncounter")))
+    ) {
+      this.attempts[task.name] = Math.max(0, this.attempts[task.name] - 1);
+    }
     lastJuneCleaverEncounters = get("_juneCleaverEncounters");
 
     originalValues.forEach(([resource, val]) => {
@@ -234,6 +240,9 @@ export class Engine extends BaseEngine {
     } else {
       print(`${task.name} not completed!`, "blue");
     }
+
+    // Finally handle the checkLimits() ourselves since we plucked it out of execute()
+    this.checkLimits(task, undefined);
   }
 
   createOutfit(task: Task): Outfit {

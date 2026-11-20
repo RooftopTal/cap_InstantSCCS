@@ -12,6 +12,7 @@ import {
   Effect,
   effectModifier,
   equip,
+  equippedItem,
   getCampground,
   getDwelling,
   getWorkshed,
@@ -35,6 +36,7 @@ import {
   myMeat,
   myMp,
   mySoulsauce,
+  numericModifier,
   print,
   putCloset,
   refreshStatus,
@@ -129,6 +131,8 @@ import {
   haveFreeBanish,
   havePowerlevelingZoneBound,
   haveWishes,
+  interestingCoinBuff,
+  interestingCoinItem,
   legendarySealClubbingClub,
   LOVEquip,
   mainStat,
@@ -464,9 +468,16 @@ export const LevelingQuest: Quest = {
       completed: () =>
         !have($item`bat wings`) ||
         get("_batWingsRestUsed") >= 11 ||
-        myMp() >= Math.min(200, myMaxmp()),
+        myMp() >=
+          Math.min(200, myMaxmp() - numericModifier(equippedItem($slot`back`), "Maximum Mp")),
       do: (): void => {
-        if (myMp() < Math.min(200, myMaxmp())) {
+        if (
+          myMp() <
+          Math.min(200, myMaxmp() - numericModifier(equippedItem($slot`back`), "Maximum Mp"))
+        ) {
+          print(
+            `Current MP: ${myMp()}/${myMaxmp()} (${myMaxmp() - numericModifier(equippedItem($slot`back`), "Maximum Mp")})`,
+          );
           useSkill($skill`Rest upside down`);
         }
       },
@@ -722,6 +733,19 @@ export const LevelingQuest: Quest = {
       name: "Use General Store Statboost",
       completed: () => have(generalStoreXpEffect),
       do: () => ensureEffect(generalStoreXpEffect),
+    },
+    {
+      name: "Interesting Coin Buff (Pre-Fights)",
+      completed: () =>
+        have(interestingCoinBuff) ||
+        (itemAmount($item`Interesting Coin`) < 4 - get("instant_saveInterestingCoins", 0) &&
+          !have(interestingCoinItem)),
+      do: () => {
+        if (!have(interestingCoinItem)) {
+          retrieveItem(interestingCoinItem, 1);
+        }
+        use(interestingCoinItem, 1);
+      },
     },
     {
       name: "Buy Oversized Sparkler",
@@ -1992,6 +2016,19 @@ export const LevelingQuest: Quest = {
       completed: () => $effects`Mushed, It's Ridiculous`.every((ef) => !canAcquireDwellingBuff(ef)),
       do: () => acquireDwellingBuff($effects`Mushed, It's Ridiculous`),
       limit: { tries: 1 },
+    },
+    {
+      name: "Interesting Coin Buff (Free Fights)",
+      completed: () =>
+        have(interestingCoinBuff) ||
+        (itemAmount($item`Interesting Coin`) < 2 - get("instant_saveInterestingCoins", 0) &&
+          !have(interestingCoinItem)),
+      do: () => {
+        if (!have(interestingCoinItem)) {
+          retrieveItem(interestingCoinItem, 1);
+        }
+        use(interestingCoinItem, 1);
+      },
     },
     {
       name: "Apriling Band Quad Tom Sandworms",

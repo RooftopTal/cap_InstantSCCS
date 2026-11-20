@@ -291,6 +291,12 @@ export const farmingResources: Resource[] = [
     [],
     get("instant_saveSpadeDigs", false) ? 11 : 0,
   ),
+  new Resource(
+    "instant_saveInterestingCoins",
+    (n) => `Save ${n}/4 Interesting Coins`,
+    [],
+    get("instant_saveInterestingCoins", false) ? 4 : 0,
+  ),
 ];
 
 export const otherResources: Resource[] = [
@@ -306,6 +312,7 @@ export const otherResources: Resource[] = [
   new Resource("instant_saveMayamCalendar", "Do not Consider the Calendar"),
   new Resource("instant_skipPatrioticScreech", "Do not use Patriotic Screech to banish constructs"),
   new Resource("instant_skipLeprecondo", "Do not (re)configure Leprecondo"),
+  new Resource("instant_skipCupid", "Do not use toy Cupid bow to get familiar equipments"),
   new Resource(
     "instant_saveShowerGlobs",
     (n) => `Save at least ${n} globs of wet paper`,

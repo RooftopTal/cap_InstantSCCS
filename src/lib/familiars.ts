@@ -32,6 +32,7 @@ function garbageFire(): Familiar {
 
 export function sombrero(allowAttackingFamiliars = true): Familiar {
   const sombreros = [
+    $familiar`Meat Shield Maiden`,
     ...(allowAttackingFamiliars
       ? $familiars`Jill-of-All-Trades, Patriotic Eagle, Galloping Grill`
       : []),
@@ -69,6 +70,27 @@ function miniKiwi(): Familiar {
     : $familiar.none;
 }
 
+function miniTrainbot(allowAttackingFamiliars = true): Familiar {
+  return allowAttackingFamiliars &&
+    haveAndNotExcluded($familiar`Mini-Trainbot`) &&
+    !have($item`overloaded Yule battery`) &&
+    !haveAndNotExcluded($familiar`Comma Chameleon`) &&
+    have($item`toy Cupid bow`) &&
+    !get("instant_skipCupid", false)
+    ? $familiar`Mini-Trainbot`
+    : $familiar.none;
+}
+
+function homemadeRobot(): Familiar {
+  return haveAndNotExcluded($familiar`Homemade Robot`) &&
+    !have($item`homemade robot gear`) &&
+    haveAndNotExcluded($familiar`Comma Chameleon`) &&
+    have($item`toy Cupid bow`) &&
+    !get("instant_skipCupid", false)
+    ? $familiar`Homemade Robot`
+    : $familiar.none;
+}
+
 export function chooseFamiliar(allowAttackingFamiliars = true): Familiar {
   const defaultFam = haveAndNotExcluded($familiar`Cookbookbat`)
     ? $familiar`Cookbookbat`
@@ -81,6 +103,8 @@ export function chooseFamiliar(allowAttackingFamiliars = true): Familiar {
     optimisticCandle,
     rockinRobin,
     melodramedary,
+    miniTrainbot,
+    homemadeRobot,
     hoboInSheepsClothing,
     miniKiwi,
     sombrero,
