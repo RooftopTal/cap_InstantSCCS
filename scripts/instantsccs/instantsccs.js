@@ -13216,6 +13216,10 @@ function logRelevantStats(whichTest) {
     var testStat = kolmafia.toStat(whichTest.statName);
     var statString = testStat.toString().slice(0, 3);
     kolmafia.print("Base ".concat(statString, ": ").concat(kolmafia.myBasestat(testStat), "; Buffed ").concat(statString, ": ").concat(kolmafia.myBuffedstat(testStat)));
+    // Saved so cap can report it at the end of the day (e.g. _cap_instantMysticalityTestBase).
+    // Prefixed _cap_ so it can't clash with upstream InstantSCCS prefs.
+    _set("_cap_instant".concat(testStat, "TestBase"), kolmafia.myBasestat(testStat));
+    _set("_cap_instant".concat(testStat, "TestBuffed"), kolmafia.myBuffedstat(testStat));
   } else if (whichTest === CommunityService.HP) {
     kolmafia.print("Buffed Mus: ".concat(kolmafia.myBuffedstat($stat(_templateObject$d || (_templateObject$d = _taggedTemplateLiteral(["Muscle"])))), "; HP: ").concat(kolmafia.myMaxhp(), ";"));
   }
